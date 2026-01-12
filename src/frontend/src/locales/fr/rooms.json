@@ -574,7 +574,7 @@
   },
   "participantTileFocus": {
     "containerLabel": "Options pour {{name}}",
-    "toolbarHint": "? : voir les raccourcis clavier.",
+    "toolbarHint": "/ : voir les raccourcis clavier.",
     "pin": {
       "enable": "Épingler",
       "disable": "Annuler l'épinglage"
