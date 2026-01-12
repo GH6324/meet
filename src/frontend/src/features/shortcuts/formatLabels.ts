@@ -6,8 +6,12 @@ export const formatShortcutLabel = (shortcut?: Shortcut) => {
   if (!shortcut) return '—'
   const key = shortcut.key?.toUpperCase()
   if (!key) return '—'
-  if (shortcut.ctrlKey) return `${isMacintosh() ? '⌘' : 'Ctrl'}+${key}`
-  return key
+  const parts: string[] = []
+  if (shortcut.ctrlKey) parts.push(isMacintosh() ? '⌘' : 'Ctrl')
+  if (shortcut.altKey) parts.push(isMacintosh() ? '⌥' : 'Alt')
+  if (shortcut.shiftKey) parts.push('Shift')
+  parts.push(key)
+  return parts.join('+')
 }
 
 // SR-friendly label for a shortcut (reads “Control plus D”).
@@ -29,8 +33,12 @@ export const formatShortcutLabelForSR = (
   const key = shortcut.key?.toUpperCase()
   if (!key) return noShortcutLabel
   const ctrlWord = isMacintosh() ? commandLabel : controlLabel
-  if (shortcut.ctrlKey) return `${ctrlWord} ${plusLabel} ${key}`
-  return key
+  const parts: string[] = []
+  if (shortcut.ctrlKey) parts.push(ctrlWord)
+  if (shortcut.altKey) parts.push('Alt')
+  if (shortcut.shiftKey) parts.push('Shift')
+  parts.push(key)
+  return parts.join(` ${plusLabel} `)
 }
 
 // Extract displayable key name from KeyboardEvent.code (ex: KeyV -> V).

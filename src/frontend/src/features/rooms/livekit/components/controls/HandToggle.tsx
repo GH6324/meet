@@ -9,6 +9,7 @@ import {
   closeLowerHandToasts,
   showLowerHandToast,
 } from '@/features/notifications/utils'
+import { useRegisterKeyboardShortcut } from '@/features/shortcuts/useRegisterKeyboardShortcut'
 
 const SPEAKING_DETECTION_DELAY = 3000
 
@@ -27,6 +28,14 @@ export const HandToggle = () => {
   const resetToastState = () => {
     setHasShownToast(false)
   }
+
+  useRegisterKeyboardShortcut({
+    shortcut: { key: 'H', ctrlKey: true, shiftKey: true },
+    handler: async () => {
+      toggleRaisedHand()
+      resetToastState()
+    },
+  })
 
   useEffect(() => {
     if (isHandRaised) return

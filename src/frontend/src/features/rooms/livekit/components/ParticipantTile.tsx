@@ -32,6 +32,7 @@ import { ParticipantName } from './ParticipantName'
 import { getParticipantName } from '@/features/rooms/utils/getParticipantName'
 import { useTranslation } from 'react-i18next'
 import { ShortcutHelpTooltip } from './ShortcutHelpTooltip'
+import { isMacintosh } from '@/utils/livekit'
 
 export function TrackRefContextIfNeeded(
   props: React.PropsWithChildren<{
@@ -230,7 +231,9 @@ export const ParticipantTile: (
         </ParticipantContextIfNeeded>
       </TrackRefContextIfNeeded>
       <ShortcutHelpTooltip
-        triggerLabel={t('toolbarHint')}
+        triggerLabel={t('toolbarHint', {
+          modifier: isMacintosh() ? '⌘' : 'Ctrl',
+        })}
         isVisible={hasKeyboardFocus}
       />
     </div>

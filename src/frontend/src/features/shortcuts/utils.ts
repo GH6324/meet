@@ -4,8 +4,12 @@ import { Shortcut } from '@/features/shortcuts/types'
 export const CTRL = 'ctrl'
 
 export const formatShortcutKey = (shortcut: Shortcut) => {
-  if (shortcut.ctrlKey) return `${CTRL}+${shortcut.key.toUpperCase()}`
-  return shortcut.key.toUpperCase()
+  const parts = []
+  if (shortcut.ctrlKey) parts.push(CTRL)
+  if (shortcut.altKey) parts.push('alt')
+  if (shortcut.shiftKey) parts.push('shift')
+  parts.push(shortcut.key.toUpperCase())
+  return parts.join('+')
 }
 
 export const appendShortcutLabel = (label: string, shortcut: Shortcut) => {
@@ -13,6 +17,12 @@ export const appendShortcutLabel = (label: string, shortcut: Shortcut) => {
   let formattedKeyLabel = shortcut.key.toLowerCase()
   if (shortcut.ctrlKey) {
     formattedKeyLabel = `${isMacintosh() ? '⌘' : 'Ctrl'}+${formattedKeyLabel}`
+  }
+  if (shortcut.altKey) {
+    formattedKeyLabel = `${isMacintosh() ? '⌥' : 'Alt'}+${formattedKeyLabel}`
+  }
+  if (shortcut.shiftKey) {
+    formattedKeyLabel = `Shift+${formattedKeyLabel}`
   }
   return `${label} (${formattedKeyLabel})`
 }
