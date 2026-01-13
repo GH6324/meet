@@ -33,6 +33,13 @@ import { getParticipantName } from '@/features/rooms/utils/getParticipantName'
 import { useTranslation } from 'react-i18next'
 import { ShortcutHelpTooltip } from './ShortcutHelpTooltip'
 import { isMacintosh } from '@/utils/livekit'
+import {
+  loadShortcutOverrides,
+  shortcutOverridesStore,
+} from '@/stores/shortcutOverrides'
+import { useSnapshot } from 'valtio'
+import { getShortcutById } from '@/features/shortcuts/catalog'
+import { formatShortcutLabel } from '@/features/shortcuts/formatLabels'
 
 export function TrackRefContextIfNeeded(
   props: React.PropsWithChildren<{
@@ -110,6 +117,14 @@ export const ParticipantTile: (
 
   const participantName = getParticipantName(trackReference.participant)
   const { t } = useTranslation('rooms', { keyPrefix: 'participantTileFocus' })
+  loadShortcutOverrides()
+  const { overrides } = useSnapshot(shortcutOverridesStore)
+  const openShortcutDefault = getShortcutById('open-shortcuts')?.shortcut
+  const openShortcutEffective =
+    overrides.get('open-shortcuts') ?? openShortcutDefault
+  const openShortcutLabel =
+    formatShortcutLabel(openShortcutEffective) ??
+    `${isMacintosh() ? '⌘' : 'Ctrl'} + /`
 
   const interactiveProps = {
     ...elementProps,
@@ -232,7 +247,7 @@ export const ParticipantTile: (
       </TrackRefContextIfNeeded>
       <ShortcutHelpTooltip
         triggerLabel={t('toolbarHint', {
-          modifier: isMacintosh() ? '⌘' : 'Ctrl',
+          binding: openShortcutLabel,
         })}
         isVisible={hasKeyboardFocus}
       />
