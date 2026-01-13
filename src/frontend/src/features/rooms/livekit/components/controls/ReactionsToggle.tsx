@@ -43,7 +43,7 @@ export const ReactionsToggle = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useRegisterKeyboardShortcut({
-    shortcut: { key: 'E', ctrlKey: true, shiftKey: true },
+    shortcutId: 'reaction',
     handler: async () => setIsVisible((prev) => !prev),
   })
 

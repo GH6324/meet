@@ -30,7 +30,7 @@ export const HandToggle = () => {
   }
 
   useRegisterKeyboardShortcut({
-    shortcut: { key: 'H', ctrlKey: true, shiftKey: true },
+    shortcutId: 'raise-hand',
     handler: async () => {
       toggleRaisedHand()
       resetToastState()

@@ -20,7 +20,7 @@ export const ChatToggle = ({
   const tooltipLabel = isChatOpen ? 'open' : 'closed'
 
   useRegisterKeyboardShortcut({
-    shortcut: { key: 'C', ctrlKey: true, shiftKey: true },
+    shortcutId: 'toggle-chat',
     handler: async () => toggleChat(),
   })
 

@@ -29,7 +29,7 @@ export const ParticipantsToggle = ({
   const tooltipLabel = isParticipantsOpen ? 'open' : 'closed'
 
   useRegisterKeyboardShortcut({
-    shortcut: { key: 'P', ctrlKey: true, shiftKey: true },
+    shortcutId: 'toggle-participants',
     handler: async () => toggleParticipants(),
   })
 
