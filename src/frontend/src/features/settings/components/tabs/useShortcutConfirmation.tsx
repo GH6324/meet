@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { text } from '@/primitives/Text'
 
 /**
@@ -8,7 +8,7 @@ import { text } from '@/primitives/Text'
 export const useShortcutConfirmation = () => {
   const [confirmationMessage, setConfirmationMessage] = useState<string>('')
 
-  const ConfirmationMessage = () => {
+  const confirmationElement = useMemo(() => {
     if (!confirmationMessage) return null
 
     return (
@@ -21,11 +21,11 @@ export const useShortcutConfirmation = () => {
         {confirmationMessage}
       </div>
     )
-  }
+  }, [confirmationMessage])
 
   return {
     confirmationMessage,
     setConfirmationMessage,
-    ConfirmationMessage,
+    ConfirmationMessage: confirmationElement,
   }
 }
