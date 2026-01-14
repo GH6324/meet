@@ -45,6 +45,9 @@ export const formatShortcutLabelForSR = (
 export const getKeyLabelFromCode = (code?: string) => {
   if (!code) return ''
   if (code.startsWith('Key') && code.length === 4) return code.slice(3)
+  if (code.startsWith('Digit') && code.length === 6) return code.slice(5)
+  if (code === 'Space') return '␣'
+  if (code.startsWith('Arrow')) return code.slice(5) // Up, Down, Left, Right
   return code
 }
 
