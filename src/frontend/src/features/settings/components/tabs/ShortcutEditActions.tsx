@@ -5,7 +5,7 @@
  * To use it, uncomment the import and usage in ShortcutTab.tsx
  */
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Shortcut } from '@/features/shortcuts/types'
 import { css } from '@/styled-system/css'
 import { useTranslation } from 'react-i18next'
@@ -31,6 +31,7 @@ export const ShortcutEditActions = ({
 }: ShortcutEditActionsProps) => {
   const { t } = useTranslation(['settings'])
   const [editingId, setEditingId] = useState<string | null>(null)
+  const timeoutRef = useRef<number | null>(null)
 
   const handleStartEdit = useCallback(() => {
     setEditingId(shortcutId)
@@ -42,7 +43,13 @@ export const ShortcutEditActions = ({
       defaultValue: 'Shortcut reset',
     })
     onConfirmationChange?.(message)
-    setTimeout(() => onConfirmationChange?.(''), 3000)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = window.setTimeout(() => {
+      onConfirmationChange?.('')
+      timeoutRef.current = null
+    }, 3000)
   }, [shortcutId, t, onConfirmationChange])
 
   const handleKeyCapture = useCallback(
@@ -72,7 +79,13 @@ export const ShortcutEditActions = ({
         defaultValue: 'Shortcut modified',
       })
       onConfirmationChange?.(message)
-      setTimeout(() => onConfirmationChange?.(''), 3000)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+      timeoutRef.current = window.setTimeout(() => {
+        onConfirmationChange?.('')
+        timeoutRef.current = null
+      }, 3000)
     },
     [shortcutId, t, onConfirmationChange]
   )
@@ -92,6 +105,15 @@ export const ShortcutEditActions = ({
     },
     [editingId, shortcutId, handleKeyCapture, handleStartEdit]
   )
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
+      }
+    }
+  }, [])
 
   const editButtonLabel =
     editingId === shortcutId
