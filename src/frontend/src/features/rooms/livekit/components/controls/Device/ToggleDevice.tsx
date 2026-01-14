@@ -96,7 +96,7 @@ export const ToggleDevice = <T extends ToggleSource>({
 
   useRegisterKeyboardShortcut({
     shortcutId,
-    handler: async () => await toggle(),
+    handler: () => toggle(),
     isDisabled: cannotUseDevice,
   })
   useLongPress({

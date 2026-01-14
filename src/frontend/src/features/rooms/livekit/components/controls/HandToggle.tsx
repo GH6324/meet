@@ -29,12 +29,14 @@ export const HandToggle = () => {
     setHasShownToast(false)
   }
 
+  const handleToggle = () => {
+    toggleRaisedHand()
+    resetToastState()
+  }
+
   useRegisterKeyboardShortcut({
     shortcutId: 'raise-hand',
-    handler: async () => {
-      toggleRaisedHand()
-      resetToastState()
-    },
+    handler: handleToggle,
   })
 
   useEffect(() => {
@@ -77,10 +79,7 @@ export const HandToggle = () => {
         aria-label={t(tooltipLabel)}
         tooltip={t(tooltipLabel)}
         isSelected={isHandRaised}
-        onPress={() => {
-          toggleRaisedHand()
-          resetToastState()
-        }}
+        onPress={handleToggle}
         data-attr={`controls-hand-${tooltipLabel}`}
       >
         <RiHand />

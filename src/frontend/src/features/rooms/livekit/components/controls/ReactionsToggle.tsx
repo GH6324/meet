@@ -44,7 +44,7 @@ export const ReactionsToggle = () => {
 
   useRegisterKeyboardShortcut({
     shortcutId: 'reaction',
-    handler: async () => setIsVisible((prev) => !prev),
+    handler: () => setIsVisible((prev) => !prev),
   })
 
   const sendReaction = async (emoji: string) => {
