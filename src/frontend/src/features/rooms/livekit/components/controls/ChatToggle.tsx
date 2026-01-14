@@ -21,7 +21,7 @@ export const ChatToggle = ({
 
   useRegisterKeyboardShortcut({
     shortcutId: 'toggle-chat',
-    handler: async () => toggleChat(),
+    handler: toggleChat,
   })
 
   return (
