@@ -73,7 +73,9 @@ export const ShortcutCategorySection: React.FC<
           const visualShortcut = formatVisual(
             effective,
             item.code,
-            item.kind === 'longPress' ? getHoldTemplate('visual') : undefined
+            item.kind === 'longPress' && item.code
+              ? getHoldTemplate('visual')
+              : undefined
           )
           const srShortcut = formatForSR(effective, item.code)
           const actionLabel = getActionLabel(item.id)

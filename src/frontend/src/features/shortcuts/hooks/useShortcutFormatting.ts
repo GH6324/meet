@@ -19,10 +19,13 @@ export const useShortcutFormatting = (
   const { t } = useTranslation(namespace)
 
   const formatVisual = useCallback(
-    (shortcut?: Shortcut, code?: string, holdTemplate?: string) => {
-      if (code && holdTemplate) {
-        const label = getKeyLabelFromCode(code)
-        return formatLongPressLabel(label, holdTemplate)
+    (
+      shortcut?: Shortcut,
+      code?: string,
+      getHoldLabel?: (code: string) => string
+    ) => {
+      if (code && getHoldLabel) {
+        return getHoldLabel(code)
       }
       return formatShortcutLabel(shortcut)
     },
@@ -32,11 +35,9 @@ export const useShortcutFormatting = (
   const formatForSR = useCallback(
     (shortcut?: Shortcut, code?: string) => {
       if (code) {
+        const template = t('shortcutsPanel.sr.hold', { key: '{{key}}' })
         const label = getKeyLabelFromCode(code)
-        return formatLongPressLabel(
-          label,
-          t('shortcutsPanel.sr.hold', { key: '{{key}}' })
-        )
+        return formatLongPressLabel(label, template)
       }
       return formatShortcutLabelForSR(shortcut, {
         controlLabel: t('shortcutsPanel.sr.control'),
@@ -50,7 +51,11 @@ export const useShortcutFormatting = (
 
   const getHoldTemplate = useCallback(
     (type: 'visual' | 'sr' = 'visual') => {
-      return t(`shortcutsPanel.${type}.hold`, { key: '{{key}}' })
+      const template = t(`shortcutsPanel.${type}.hold`, { key: '{{key}}' })
+      return (code: string) => {
+        const label = getKeyLabelFromCode(code)
+        return formatLongPressLabel(label, template)
+      }
     },
     [t]
   )

@@ -37,7 +37,9 @@ export const ShortcutRow: React.FC<ShortcutRowProps> = ({
   const visualShortcut = formatVisual(
     effectiveShortcut,
     descriptor.code,
-    descriptor.kind === 'longPress' ? getHoldTemplate('visual') : undefined
+    descriptor.kind === 'longPress' && descriptor.code
+      ? getHoldTemplate('visual')
+      : undefined
   )
   const srShortcut = formatForSR(effectiveShortcut, descriptor.code)
   const srCustomLabel = override ? ` (${customLabel})` : ''
