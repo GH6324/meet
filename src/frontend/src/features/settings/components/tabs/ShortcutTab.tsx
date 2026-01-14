@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { shortcutCatalog } from '@/features/shortcuts/catalog'
 import { ShortcutRow } from '@/features/shortcuts/components'
 import { css } from '@/styled-system/css'
@@ -18,7 +18,9 @@ const ShortcutTab = ({ id }: Pick<TabPanelProps, 'id'>) => {
       t(key, { ns: 'rooms', ...options }),
     [t]
   )
-  loadShortcutOverrides()
+  useEffect(() => {
+    loadShortcutOverrides()
+  }, [])
   const { overrides } = useSnapshot(shortcutOverridesStore)
 
   const rows = useMemo(() => {
