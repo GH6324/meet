@@ -40,6 +40,7 @@ import {
 import { useSnapshot } from 'valtio'
 import { getShortcutById } from '@/features/shortcuts/catalog'
 import { formatShortcutLabel } from '@/features/shortcuts/formatLabels'
+import { getEffectiveShortcut } from '@/features/shortcuts/utils'
 
 export function TrackRefContextIfNeeded(
   props: React.PropsWithChildren<{
@@ -119,12 +120,14 @@ export const ParticipantTile: (
   const { t } = useTranslation('rooms', { keyPrefix: 'participantTileFocus' })
   loadShortcutOverrides()
   const { overrides } = useSnapshot(shortcutOverridesStore)
-  const openShortcutDefault = getShortcutById('open-shortcuts')?.shortcut
-  const openShortcutEffective =
-    overrides.get('open-shortcuts') ?? openShortcutDefault
-  const openShortcutLabel =
-    formatShortcutLabel(openShortcutEffective) ??
-    `${isMacintosh() ? '⌘' : 'Ctrl'} + /`
+  const openShortcutEffective = getEffectiveShortcut(
+    'open-shortcuts',
+    overrides,
+    getShortcutById
+  )
+  const openShortcutLabel = openShortcutEffective
+    ? formatShortcutLabel(openShortcutEffective)
+    : `${isMacintosh() ? '⌘' : 'Ctrl'} + /`
 
   const interactiveProps = {
     ...elementProps,
