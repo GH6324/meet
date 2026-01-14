@@ -27,9 +27,13 @@ export const useRegisterKeyboardShortcut = ({
   handler,
   isDisabled = false,
 }: useRegisterKeyboardShortcutProps) => {
-  loadShortcutOverrides()
   const { overrides } = useSnapshot(shortcutOverridesStore)
   const previousKeyRef = useRef<string | null>(null)
+  const unmountKeyRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    loadShortcutOverrides()
+  }, [])
 
   useEffect(() => {
     let effectiveShortcut: Shortcut | undefined
@@ -57,6 +61,9 @@ export const useRegisterKeyboardShortcut = ({
 
     const formattedKey = formatShortcutKey(effectiveShortcut)
 
+    // Capture the key for unmount cleanup at the start of the effect
+    unmountKeyRef.current = formattedKey
+
     // Clean up previous shortcut if the key changed
     if (previousKeyRef.current && previousKeyRef.current !== formattedKey) {
       keyboardShortcutsStore.shortcuts.delete(previousKeyRef.current)
@@ -72,9 +79,9 @@ export const useRegisterKeyboardShortcut = ({
 
     // Cleanup function: remove shortcut when component unmounts or dependencies change
     return () => {
-      if (previousKeyRef.current) {
-        keyboardShortcutsStore.shortcuts.delete(previousKeyRef.current)
-        previousKeyRef.current = null
+      if (unmountKeyRef.current) {
+        keyboardShortcutsStore.shortcuts.delete(unmountKeyRef.current)
+        unmountKeyRef.current = null
       }
     }
   }, [handler, shortcutId, shortcut, fallbackShortcut, isDisabled, overrides])
