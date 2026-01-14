@@ -11,6 +11,7 @@ import { css } from '@/styled-system/css'
 import { useTranslation } from 'react-i18next'
 import { buttonRecipe } from '@/primitives/buttonRecipe'
 import { removeOverride, setOverride } from '@/stores/shortcutOverrides'
+import { isMacintosh } from '@/utils/livekit'
 
 const buttonLink = buttonRecipe({ variant: 'secondary', size: 'sm' })
 
@@ -37,6 +38,20 @@ export const ShortcutEditActions = ({
     setEditingId(shortcutId)
   }, [shortcutId])
 
+  const handleCancelEdit = useCallback(() => {
+    setEditingId(null)
+  }, [])
+
+  const handleEditButtonClick = useCallback(() => {
+    // If already in edit mode, cancel it
+    if (editingId === shortcutId) {
+      handleCancelEdit()
+      return
+    }
+    // Otherwise, start edit mode
+    handleStartEdit()
+  }, [editingId, shortcutId, handleCancelEdit, handleStartEdit])
+
   const handleReset = useCallback(() => {
     removeOverride(shortcutId)
     const message = t('shortcutsEditor.resetConfirmation', {
@@ -55,7 +70,7 @@ export const ShortcutEditActions = ({
   const handleKeyCapture = useCallback(
     (e: React.KeyboardEvent<HTMLButtonElement>) => {
       e.preventDefault()
-      const { key, ctrlKey, shiftKey, altKey } = e
+      const { key, ctrlKey, shiftKey, altKey, metaKey } = e
       // Ignore modifier-only keys
       if (
         !key ||
@@ -69,7 +84,7 @@ export const ShortcutEditActions = ({
         return
       const normalized: Shortcut = {
         key,
-        ctrlKey,
+        ctrlKey: ctrlKey || (isMacintosh() && metaKey),
         shiftKey,
         altKey,
       }
@@ -151,7 +166,7 @@ export const ShortcutEditActions = ({
         type="button"
         className={buttonLink}
         onKeyDown={handleEditButtonKeyDown}
-        onClick={handleStartEdit}
+        onClick={handleEditButtonClick}
         aria-pressed={editingId === shortcutId}
         aria-label={editButtonAriaLabel}
         aria-describedby={`shortcut-${shortcutId}-description`}
