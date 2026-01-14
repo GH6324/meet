@@ -1,7 +1,10 @@
 import { ToggleButton } from '@/primitives'
 import { useRegisterKeyboardShortcut } from '@/features/shortcuts/useRegisterKeyboardShortcut'
 import { useMemo, useState } from 'react'
-import { appendShortcutLabel } from '@/features/shortcuts/utils'
+import {
+  appendShortcutLabel,
+  getEffectiveShortcut,
+} from '@/features/shortcuts/utils'
 import { useTranslation } from 'react-i18next'
 import { PermissionNeededButton } from './PermissionNeededButton'
 import useLongPress from '@/features/shortcuts/useLongPress'
@@ -104,10 +107,7 @@ export const ToggleDevice = <T extends ToggleSource>({
   })
 
   const deviceShortcut = useMemo(() => {
-    const override = overrides.get(shortcutId)
-    if (override) return override
-    const catalogItem = getShortcutById(shortcutId)
-    return catalogItem?.shortcut
+    return getEffectiveShortcut(shortcutId, overrides, getShortcutById)
   }, [shortcutId, overrides])
 
   const toggleLabel = useMemo(() => {

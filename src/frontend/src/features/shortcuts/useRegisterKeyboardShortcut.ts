@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { useSnapshot } from 'valtio'
 import { keyboardShortcutsStore } from '@/stores/keyboardShortcuts'
-import { formatShortcutKey } from '@/features/shortcuts/utils'
+import {
+  formatShortcutKey,
+  getEffectiveShortcut,
+} from '@/features/shortcuts/utils'
 import { Shortcut } from '@/features/shortcuts/types'
 import { ShortcutId, getShortcutById } from './catalog'
 import {
-  getOverride,
   loadShortcutOverrides,
   shortcutOverridesStore,
 } from '@/stores/shortcutOverrides'
@@ -34,11 +36,11 @@ export const useRegisterKeyboardShortcut = ({
 
     if (shortcutId) {
       // Try override first, then fallback to catalog default
-      effectiveShortcut = getOverride(shortcutId)
-      if (!effectiveShortcut) {
-        const catalogItem = getShortcutById(shortcutId)
-        effectiveShortcut = catalogItem?.shortcut
-      }
+      effectiveShortcut = getEffectiveShortcut(
+        shortcutId,
+        overrides,
+        getShortcutById
+      )
     }
 
     // Fallback to provided shortcuts if no shortcutId or catalog item found
