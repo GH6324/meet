@@ -1,6 +1,7 @@
-import { type ReactNode, useRef, useState } from 'react'
+import { type ReactNode, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { css } from '@/styled-system/css'
+import { useUNSAFE_PortalContext } from '@react-aria/overlays'
 
 export type VisualOnlyTooltipProps = {
   children: ReactNode
@@ -23,18 +24,24 @@ export const VisualOnlyTooltip = ({
 }: VisualOnlyTooltipProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const { getContainer } = useUNSAFE_PortalContext()
 
   const getPosition = () => {
     if (!wrapperRef.current) return null
     const rect = wrapperRef.current.getBoundingClientRect()
     return {
-      top: rect.top - 8,
+      top: rect.top - 4,
       left: rect.left + rect.width / 2,
     }
   }
 
   const position = getPosition()
   const tooltipData = isVisible && position ? { isVisible, position } : null
+
+  const portalContainer = useMemo(() => {
+    if (getContainer) return getContainer()
+    return wrapperRef.current?.ownerDocument?.body ?? document.body
+  }, [getContainer])
 
   return (
     <>
@@ -47,7 +54,7 @@ export const VisualOnlyTooltip = ({
       >
         {children}
       </div>
-      {tooltipData &&
+      {tooltipData && portalContainer &&
         createPortal(
           <div
             aria-hidden="true"
@@ -81,7 +88,7 @@ export const VisualOnlyTooltip = ({
           >
             {tooltip}
           </div>,
-          document.body
+          portalContainer
         )}
     </>
   )
