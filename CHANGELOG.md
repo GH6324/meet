@@ -17,6 +17,7 @@ and this project adheres to
 - ♻️(frontend) replace custom reactions toolbar with react aria popover #985
 - 🔒️(frontend) uninstall curl from the frontend production image #987
 - 💄(frontend) add focus ring to reaction emoji buttons
+- ✨(frontend) introduce a shortcut settings tab #975
 
 ## [1.8.0] - 2026-02-20
 
