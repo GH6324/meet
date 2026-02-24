@@ -14,7 +14,7 @@ export const formatShortcutLabel = (shortcut?: Shortcut) => {
   return parts.join('+')
 }
 
-// SR-friendly label for a shortcut (reads “Control plus D”).
+// SR-friendly label for a shortcut (reads "Control plus D").
 export const formatShortcutLabelForSR = (
   shortcut: Shortcut | undefined,
   {
@@ -56,13 +56,4 @@ export const getKeyLabelFromCode = (code?: string) => {
   if (code === 'Space') return '␣'
   if (code.startsWith('Arrow')) return code.slice(5) // Up, Down, Left, Right
   return code
-}
-
-// Long-press label (visual or SR), e.g. “Hold V”.
-export const formatLongPressLabel = (
-  codeLabel: string,
-  holdTemplate: string
-) => {
-  if (!codeLabel) return holdTemplate.replace('{{key}}', '?')
-  return holdTemplate.replace('{{key}}', codeLabel)
 }

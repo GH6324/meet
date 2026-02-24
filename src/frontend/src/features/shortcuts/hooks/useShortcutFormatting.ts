@@ -4,7 +4,6 @@ import { Shortcut } from '../types'
 import {
   formatShortcutLabel,
   formatShortcutLabelForSR,
-  formatLongPressLabel,
   getKeyLabelFromCode,
 } from '../formatLabels'
 
@@ -15,10 +14,7 @@ export const useShortcutFormatting = () => {
     (shortcut?: Shortcut, code?: string, kind?: string) => {
       if (code && kind === 'longPress') {
         const label = getKeyLabelFromCode(code)
-        return formatLongPressLabel(
-          label,
-          t('shortcutsPanel.visual.hold', { key: '{{key}}' })
-        )
+        return t('shortcutsPanel.visual.hold', { key: label || '?' })
       }
       return formatShortcutLabel(shortcut)
     },
@@ -29,10 +25,7 @@ export const useShortcutFormatting = () => {
     (shortcut?: Shortcut, code?: string, kind?: string) => {
       if (code && kind === 'longPress') {
         const label = getKeyLabelFromCode(code)
-        return formatLongPressLabel(
-          label,
-          t('shortcutsPanel.sr.hold', { key: '{{key}}' })
-        )
+        return t('shortcutsPanel.sr.hold', { key: label || '?' })
       }
       return formatShortcutLabelForSR(shortcut, {
         controlLabel: t('shortcutsPanel.sr.control'),
