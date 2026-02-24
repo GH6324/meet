@@ -620,6 +620,7 @@
       "control": "Contrôle",
       "command": "Commande",
       "alt": "Alt",
+      "option": "Option",
       "shift": "Majuscule",
       "plus": "plus",
       "hold": "Maintenir {{key}}",

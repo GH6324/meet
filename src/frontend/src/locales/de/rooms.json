@@ -620,6 +620,7 @@
       "control": "Steuerung",
       "command": "Befehl",
       "alt": "Alt",
+      "option": "Option",
       "shift": "Umschalt",
       "plus": "plus",
       "hold": "Halte {{key}} gedrückt",

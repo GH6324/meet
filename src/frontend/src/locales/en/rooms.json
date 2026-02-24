@@ -620,6 +620,7 @@
       "control": "Control",
       "command": "Command",
       "alt": "Alt",
+      "option": "Option",
       "shift": "Shift",
       "plus": "plus",
       "hold": "Hold {{key}}",

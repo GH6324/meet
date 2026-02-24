@@ -38,6 +38,7 @@ export const useShortcutFormatting = () => {
         controlLabel: t('shortcutsPanel.sr.control'),
         commandLabel: t('shortcutsPanel.sr.command'),
         altLabel: t('shortcutsPanel.sr.alt'),
+        optionLabel: t('shortcutsPanel.sr.option'),
         shiftLabel: t('shortcutsPanel.sr.shift'),
         plusLabel: t('shortcutsPanel.sr.plus'),
         noShortcutLabel: t('shortcutsPanel.sr.noShortcut'),

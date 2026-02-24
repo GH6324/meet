@@ -21,6 +21,7 @@ export const formatShortcutLabelForSR = (
     controlLabel,
     commandLabel,
     altLabel,
+    optionLabel,
     shiftLabel,
     plusLabel,
     noShortcutLabel,
@@ -28,6 +29,7 @@ export const formatShortcutLabelForSR = (
     controlLabel: string
     commandLabel: string
     altLabel: string
+    optionLabel: string
     shiftLabel: string
     plusLabel: string
     noShortcutLabel: string
@@ -37,9 +39,10 @@ export const formatShortcutLabelForSR = (
   const key = shortcut.key?.toUpperCase()
   if (!key) return noShortcutLabel
   const ctrlWord = isMacintosh() ? commandLabel : controlLabel
+  const altWord = isMacintosh() ? optionLabel : altLabel
   const parts: string[] = []
   if (shortcut.ctrlKey) parts.push(ctrlWord)
-  if (shortcut.altKey) parts.push(altLabel)
+  if (shortcut.altKey) parts.push(altWord)
   if (shortcut.shiftKey) parts.push(shiftLabel)
   parts.push(key)
   return parts.join(` ${plusLabel} `)
