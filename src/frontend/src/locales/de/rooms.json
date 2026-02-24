@@ -619,6 +619,8 @@
     "sr": {
       "control": "Steuerung",
       "command": "Befehl",
+      "alt": "Alt",
+      "shift": "Umschalt",
       "plus": "plus",
       "hold": "Halte {{key}} gedrückt",
       "noShortcut": "Kein Tastenkürzel"

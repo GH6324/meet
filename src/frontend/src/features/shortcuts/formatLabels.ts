@@ -20,11 +20,15 @@ export const formatShortcutLabelForSR = (
   {
     controlLabel,
     commandLabel,
+    altLabel,
+    shiftLabel,
     plusLabel,
     noShortcutLabel,
   }: {
     controlLabel: string
     commandLabel: string
+    altLabel: string
+    shiftLabel: string
     plusLabel: string
     noShortcutLabel: string
   }
@@ -35,8 +39,8 @@ export const formatShortcutLabelForSR = (
   const ctrlWord = isMacintosh() ? commandLabel : controlLabel
   const parts: string[] = []
   if (shortcut.ctrlKey) parts.push(ctrlWord)
-  if (shortcut.altKey) parts.push('Alt')
-  if (shortcut.shiftKey) parts.push('Shift')
+  if (shortcut.altKey) parts.push(altLabel)
+  if (shortcut.shiftKey) parts.push(shiftLabel)
   parts.push(key)
   return parts.join(` ${plusLabel} `)
 }

@@ -619,6 +619,8 @@
     "sr": {
       "control": "Contrôle",
       "command": "Commande",
+      "alt": "Alt",
+      "shift": "Majuscule",
       "plus": "plus",
       "hold": "Maintenir {{key}}",
       "noShortcut": "Aucun raccourci"

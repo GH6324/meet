@@ -619,6 +619,8 @@
     "sr": {
       "control": "Control",
       "command": "Command",
+      "alt": "Alt",
+      "shift": "Shift",
       "plus": "plus",
       "hold": "Houd {{key}} ingedrukt",
       "noShortcut": "Geen sneltoets"

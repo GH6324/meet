@@ -37,6 +37,8 @@ export const useShortcutFormatting = () => {
       return formatShortcutLabelForSR(shortcut, {
         controlLabel: t('shortcutsPanel.sr.control'),
         commandLabel: t('shortcutsPanel.sr.command'),
+        altLabel: t('shortcutsPanel.sr.alt'),
+        shiftLabel: t('shortcutsPanel.sr.shift'),
         plusLabel: t('shortcutsPanel.sr.plus'),
         noShortcutLabel: t('shortcutsPanel.sr.noShortcut'),
       })

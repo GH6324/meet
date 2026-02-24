@@ -19,6 +19,7 @@ and this project adheres to
 - 💄(frontend) add focus ring to reaction emoji buttons
 - ✨(frontend) introduce a shortcut settings tab #975
 - 🚚(frontend) rename "wellknown" directory to "well-known" #1009
+- 🌐(frontend) localize SR modifier labels #1010
 
 ## [1.8.0] - 2026-02-20
 
