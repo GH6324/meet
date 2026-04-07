@@ -11,6 +11,7 @@ and this project adheres to
 ### Added
 
 - 🔒️(backend) add validation of Room.configuration
+- ✨(helm) add support multiple transcribe worker / endpoint #1247
 
 ### Fixed
 
