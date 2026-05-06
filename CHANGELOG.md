@@ -14,6 +14,10 @@ and this project adheres to
 - ✨(helm) add support multiple transcribe worker / endpoint #1247
 - ✨(backend) make LiveKit Egress recording encoding configurable #1288
 
+### Changed
+
+- ♻️(summary) change tasks endpoint signature
+
 ### Fixed
 
 - ♻(frontend) standardize role terminology across localizations
